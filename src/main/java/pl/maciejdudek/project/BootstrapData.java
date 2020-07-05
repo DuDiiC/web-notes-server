@@ -3,8 +3,12 @@ package pl.maciejdudek.project;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import pl.maciejdudek.project.model.Note;
 import pl.maciejdudek.project.model.User;
+import pl.maciejdudek.project.repositories.NoteRepository;
 import pl.maciejdudek.project.repositories.UserRepository;
+
+import java.time.LocalDateTime;
 
 @Configuration
 public class BootstrapData {
@@ -23,5 +27,11 @@ public class BootstrapData {
 
         userRepository.save(kamil);
         userRepository.save(marcin);
+
+        Note note1 = new Note();
+        note1.setContent("Pierwsza notatka");
+        note1.setCreatedAt(LocalDateTime.now());
+
+        noteRepository.save(note1);
     }
 }
