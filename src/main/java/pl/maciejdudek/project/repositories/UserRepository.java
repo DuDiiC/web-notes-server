@@ -11,6 +11,10 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
+    @Override
+    @Query("select distinct u from User u join fetch u.notes")
+    List<User> findAll();
+
     Optional<User> findByUsername(String username);
     Optional<User> findByUsernameIgnoringCase(String username);
 }
