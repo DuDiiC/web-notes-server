@@ -7,6 +7,7 @@ import pl.maciejdudek.project.model.Note;
 import pl.maciejdudek.project.repositories.NoteRepository;
 import pl.maciejdudek.project.repositories.UserRepository;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -45,11 +46,12 @@ public class NoteServiceImpl implements NoteService{
     }
 
     @Override
+    @Transactional
     public Note update(Long id, Note note) {
         Note noteToUpdate = noteRepository.findById(id)
                 .orElseThrow(() -> new ObjectNotFoundException(id, "Note"));
         noteToUpdate.setContent(note.getContent());
-        return noteRepository.save(noteToUpdate);
+        return noteToUpdate;
     }
 
     @Override
