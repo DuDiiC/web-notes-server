@@ -35,6 +35,11 @@ public class NoteServiceImpl implements NoteService{
     }
 
     @Override
+    public List<Note> getAllByUser(Long id) {
+        return noteRepository.findAllByUserId(id);
+    }
+
+    @Override
     public Note save(Note note) {
         note.setCreatedAt(LocalDateTime.now());
         note.setUser(

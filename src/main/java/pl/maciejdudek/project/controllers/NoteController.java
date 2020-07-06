@@ -37,6 +37,13 @@ public class NoteController {
                 NoteDTO.class);
     }
 
+    @GetMapping("/users/{id}/notes")
+    public List<NoteDTO> getAllByUser(@PathVariable Long id) {
+        return noteService.getAllByUser(id).stream()
+                .map(note -> modelMapper.map(note, NoteDTO.class))
+                .collect(Collectors.toList());
+    }
+
     @PostMapping("/notes")
     public NoteDTO save(@RequestBody NoteDTO noteDTO) {
         return modelMapper.map(

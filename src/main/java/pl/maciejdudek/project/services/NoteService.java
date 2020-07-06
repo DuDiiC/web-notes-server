@@ -14,4 +14,6 @@ public interface NoteService {
     Note update(Long id, Note note);
 
     void delete(Long id);
+
+    List<Note> getAllByUser(Long id);
 }
