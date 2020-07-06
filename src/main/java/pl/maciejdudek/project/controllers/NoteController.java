@@ -5,9 +5,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import pl.maciejdudek.project.model.DTO.NoteDTO;
 import pl.maciejdudek.project.model.Note;
+import pl.maciejdudek.project.model.NoteStatus;
 import pl.maciejdudek.project.services.NoteServiceImpl;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
@@ -56,6 +58,14 @@ public class NoteController {
         return modelMapper.map(
                 noteService.update(id, modelMapper.map(noteDTO, Note.class)),
                 NoteDTO.class);
+    }
+
+    @PutMapping("/notes/{id}/status")
+    public NoteDTO updateStatus(@PathVariable Long id, @RequestBody Map<String, NoteStatus> statusJson) {
+        return modelMapper.map(
+                noteService.updateStatus(id, statusJson.get("status")),
+                NoteDTO.class
+        );
     }
 
     @DeleteMapping("/notes/{id}")

@@ -65,4 +65,13 @@ public class NoteServiceImpl implements NoteService{
     public void delete(Long id) {
         noteRepository.deleteById(id);
     }
+
+    @Override
+    @Transactional
+    public Note updateStatus(Long id, NoteStatus noteStatus) {
+        Note note = noteRepository.findById(id)
+                .orElseThrow(() -> new ObjectNotFoundException(id, "Note"));
+        note.setNoteStatus(noteStatus);
+        return note;
+    }
 }
