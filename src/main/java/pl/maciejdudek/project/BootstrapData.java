@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import pl.maciejdudek.project.model.Note;
+import pl.maciejdudek.project.model.NoteStatus;
 import pl.maciejdudek.project.model.User;
 import pl.maciejdudek.project.repositories.NoteRepository;
 import pl.maciejdudek.project.repositories.UserRepository;
@@ -32,6 +33,7 @@ public class BootstrapData {
         note1.setContent("Pierwsza notatka");
         note1.setUser(marcin);
         note1.setCreatedAt(LocalDateTime.now());
+        note1.setNoteStatus(NoteStatus.ACTIVE);
 
         noteRepository.save(note1);
     }

@@ -4,6 +4,7 @@ import org.hibernate.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.maciejdudek.project.model.Note;
+import pl.maciejdudek.project.model.NoteStatus;
 import pl.maciejdudek.project.repositories.NoteRepository;
 import pl.maciejdudek.project.repositories.UserRepository;
 
@@ -42,6 +43,7 @@ public class NoteServiceImpl implements NoteService{
     @Override
     public Note save(Note note) {
         note.setCreatedAt(LocalDateTime.now());
+        note.setNoteStatus(NoteStatus.ACTIVE);
         note.setUser(
                 userRepository.findById(
                         note.getUser().getId())
