@@ -30,6 +30,7 @@ public class BootstrapData {
 
         Note note1 = new Note();
         note1.setContent("Pierwsza notatka");
+        note1.setUser(marcin);
         note1.setCreatedAt(LocalDateTime.now());
 
         noteRepository.save(note1);
