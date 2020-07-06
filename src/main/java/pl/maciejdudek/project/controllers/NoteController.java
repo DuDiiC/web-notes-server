@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/notes")
+@RequestMapping("/api")
 public class NoteController {
 
     private final NoteServiceImpl noteService;
@@ -23,35 +23,35 @@ public class NoteController {
         this.modelMapper = modelMapper;
     }
 
-    @GetMapping
+    @GetMapping("/notes")
     public List<NoteDTO> getAll() {
         return noteService.getAll().stream()
                 .map(note -> modelMapper.map(note, NoteDTO.class))
                 .collect(Collectors.toList());
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/notes/{id}")
     public NoteDTO getOne(@PathVariable Long id) {
         return modelMapper.map(
                 noteService.getOne(id),
                 NoteDTO.class);
     }
 
-    @PostMapping
+    @PostMapping("/notes")
     public NoteDTO save(@RequestBody NoteDTO noteDTO) {
         return modelMapper.map(
                 noteService.save(modelMapper.map(noteDTO, Note.class)),
                 NoteDTO.class);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/notes/{id}")
     public NoteDTO update(@PathVariable Long id, @RequestBody NoteDTO noteDTO) {
         return modelMapper.map(
                 noteService.update(id, modelMapper.map(noteDTO, Note.class)),
                 NoteDTO.class);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/notes/{id}")
     public void delete(@PathVariable Long id) {
         noteService.delete(id);
     }

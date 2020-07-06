@@ -13,7 +13,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping(("/api/users"))
+@RequestMapping(("/api"))
 public class UserController {
 
     private final UserServiceImpl userService;
@@ -25,19 +25,19 @@ public class UserController {
         this.modelMapper = modelMapper;
     }
 
-    @GetMapping
+    @GetMapping("/users")
     public List<UserDTO> getAll() {
         return userService.getAll().stream()
                 .map(user -> modelMapper.map(user, UserDTO.class))
                 .collect(Collectors.toList());
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/users/{id}")
     public UserDTO getOne(@PathVariable Long id) {
         return modelMapper.map(userService.getOne(id), UserDTO.class);
     }
 
-    @GetMapping("/name")
+    @GetMapping("/users/name")
     public UserDTO getOneByName(@RequestParam("username") String username) {
         return modelMapper.map(userService.getOneByName(username), UserDTO.class);
     }
