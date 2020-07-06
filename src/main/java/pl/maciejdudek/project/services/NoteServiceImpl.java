@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.maciejdudek.project.model.Note;
 import pl.maciejdudek.project.repositories.NoteRepository;
+import pl.maciejdudek.project.repositories.UserRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -13,10 +14,12 @@ import java.util.List;
 public class NoteServiceImpl implements NoteService{
 
     private final NoteRepository noteRepository;
+    private final UserRepository userRepository;
 
     @Autowired
-    public NoteServiceImpl(NoteRepository noteRepository) {
+    public NoteServiceImpl(NoteRepository noteRepository, UserRepository userRepository) {
         this.noteRepository = noteRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -33,12 +36,18 @@ public class NoteServiceImpl implements NoteService{
     @Override
     public Note save(Note note) {
         note.setCreatedAt(LocalDateTime.now());
+        note.setUser(
+                userRepository.findById(
+                        note.getUser().getId())
+                        .orElseThrow(() -> new ObjectNotFoundException(note.getUser().getId(), "User"))
+        );
         return noteRepository.save(note);
     }
 
     @Override
     public Note update(Long id, Note note) {
-        Note noteToUpdate = noteRepository.getOne(id);
+        Note noteToUpdate = noteRepository.findById(id)
+                .orElseThrow(() -> new ObjectNotFoundException(id, "Note"));
         noteToUpdate.setContent(note.getContent());
         return noteRepository.save(noteToUpdate);
     }

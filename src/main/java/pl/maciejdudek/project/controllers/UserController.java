@@ -1,35 +1,44 @@
 package pl.maciejdudek.project.controllers;
 
+import org.modelmapper.Converter;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import pl.maciejdudek.project.model.User;
+import pl.maciejdudek.project.model.DTO.UserDTO;
+import pl.maciejdudek.project.model.Note;
 import pl.maciejdudek.project.services.UserServiceImpl;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(("/api/users"))
 public class UserController {
 
     private final UserServiceImpl userService;
+    private final ModelMapper modelMapper;
 
     @Autowired
-    public UserController(UserServiceImpl userService) {
+    public UserController(UserServiceImpl userService, ModelMapper modelMapper) {
         this.userService = userService;
+        this.modelMapper = modelMapper;
     }
 
     @GetMapping
-    public List<User> getAll() {
-        return userService.getAll();
+    public List<UserDTO> getAll() {
+        return userService.getAll().stream()
+                .map(user -> modelMapper.map(user, UserDTO.class))
+                .collect(Collectors.toList());
     }
 
     @GetMapping("/{id}")
-    public User getOne(@PathVariable Long id) {
-        return userService.getOne(id);
+    public UserDTO getOne(@PathVariable Long id) {
+        return modelMapper.map(userService.getOne(id), UserDTO.class);
     }
 
     @GetMapping("/name")
-    public User getOneByName(@RequestParam("username") String username) {
-        return userService.getOneByName(username);
+    public UserDTO getOneByName(@RequestParam("username") String username) {
+        return modelMapper.map(userService.getOneByName(username), UserDTO.class);
     }
 }
