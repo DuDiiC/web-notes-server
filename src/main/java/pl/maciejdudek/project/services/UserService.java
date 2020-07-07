@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface UserService {
 
-    List<User> getAll();
+    List<User> getAll(int page, int size);
     User getOne(Long id);
     User getOneByName(String username);
 

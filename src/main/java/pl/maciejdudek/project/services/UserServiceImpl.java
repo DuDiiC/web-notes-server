@@ -2,10 +2,13 @@ package pl.maciejdudek.project.services;
 
 import lombok.RequiredArgsConstructor;
 import org.hibernate.ObjectNotFoundException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import pl.maciejdudek.project.model.User;
 import pl.maciejdudek.project.repositories.UserRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -15,8 +18,12 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
     @Override
-    public List<User> getAll() {
-        return userRepository.findAll();
+    public List<User> getAll(int page, int size) {
+        Page<User> pagedResult = userRepository.findAll(PageRequest.of(page, size));
+        if(pagedResult.hasContent()) {
+            return pagedResult.getContent();
+        }
+        return new ArrayList<>();
     }
 
     @Override

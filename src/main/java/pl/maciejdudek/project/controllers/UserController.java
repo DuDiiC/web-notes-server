@@ -20,8 +20,9 @@ public class UserController {
     // todo: add pagination
     // todo: add security (only for admin)
     @GetMapping("/users")
-    public List<UserDTO> getAll() {
-        return userService.getAll().stream()
+    public List<UserDTO> getAll(@RequestParam(defaultValue = "0") int page,
+                                @RequestParam(defaultValue = "5") int size) {
+        return userService.getAll(page, size).stream()
                 .map(user -> modelMapper.map(user, UserDTO.class))
                 .collect(Collectors.toList());
     }
