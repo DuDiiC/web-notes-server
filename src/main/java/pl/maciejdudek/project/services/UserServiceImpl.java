@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.hibernate.ObjectNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import pl.maciejdudek.project.model.User;
 import pl.maciejdudek.project.repositories.UserRepository;
@@ -18,8 +19,8 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
     @Override
-    public List<User> getAll(int page, int size) {
-        Page<User> pagedResult = userRepository.findAll(PageRequest.of(page, size));
+    public List<User> getAll(int page, int size, Sort.Direction sort, String by) {
+        Page<User> pagedResult = userRepository.findAll(PageRequest.of(page, size, Sort.by(sort, by)));
         if(pagedResult.hasContent()) {
             return pagedResult.getContent();
         }
