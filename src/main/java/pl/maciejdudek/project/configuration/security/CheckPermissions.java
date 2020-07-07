@@ -2,15 +2,18 @@ package pl.maciejdudek.project.configuration.security;
 
 import org.hibernate.ObjectNotFoundException;
 import org.springframework.stereotype.Component;
+import pl.maciejdudek.project.repositories.NoteRepository;
 import pl.maciejdudek.project.repositories.UserRepository;
 
 @Component
 public class CheckPermissions {
 
     private final UserRepository userRepository;
+    private final NoteRepository noteRepository;
 
-    public CheckPermissions(UserRepository userRepository) {
+    public CheckPermissions(UserRepository userRepository, NoteRepository noteRepository) {
         this.userRepository = userRepository;
+        this.noteRepository = noteRepository;
     }
 
     public boolean isAdmin(String username) {
@@ -23,5 +26,14 @@ public class CheckPermissions {
         return userRepository.findById(id).orElseThrow(
                 () -> new ObjectNotFoundException(id, "User")
         ).getUsername().equals(username);
+    }
+
+    public boolean noteBelongsToUser(String username, long noteId) {
+        return userRepository.findByUsername(username).orElseThrow(
+                () -> new ObjectNotFoundException(username, "User")
+        ).getId().equals(noteRepository.findById(noteId).orElseThrow(
+                () -> new ObjectNotFoundException(noteId, "Note")
+        ).getUser().getId());
+
     }
 }
