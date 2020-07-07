@@ -64,11 +64,10 @@ public class NoteController {
         throw new UnauthorizedException();
     }
 
-    // todo: set default user id (user who creating note)
     @PostMapping("/notes")
-    public NoteDTO save(@RequestBody NoteDTO noteDTO) {
+    public NoteDTO save(@RequestBody NoteDTO noteDTO, @AuthenticationPrincipal Principal principal) {
         return modelMapper.map(
-                noteService.save(modelMapper.map(noteDTO, Note.class)),
+                noteService.save(modelMapper.map(noteDTO, Note.class), principal.getName()),
                 NoteDTO.class);
     }
 

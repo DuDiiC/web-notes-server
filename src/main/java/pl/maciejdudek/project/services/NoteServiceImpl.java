@@ -48,13 +48,13 @@ public class NoteServiceImpl implements NoteService{
     }
 
     @Override
-    public Note save(Note note) {
+    public Note save(Note note, String username) {
         note.setCreatedAt(LocalDateTime.now());
         note.setNoteStatus(NoteStatus.ACTIVE);
         note.setUser(
-                userRepository.findById(
-                        note.getUser().getId())
-                        .orElseThrow(() -> new ObjectNotFoundException(note.getUser().getId(), "User"))
+                userRepository.findByUsername(
+                        username)
+                        .orElseThrow(() -> new ObjectNotFoundException(username, "User"))
         );
         return noteRepository.save(note);
     }

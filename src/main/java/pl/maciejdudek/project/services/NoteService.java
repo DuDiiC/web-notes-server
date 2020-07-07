@@ -11,7 +11,7 @@ public interface NoteService {
     List<Note> getAll(int page, int size, Sort.Direction sort, String by);
     Note getOne(Long id);
 
-    Note save(Note note);
+    Note save(Note note, String username);
 
     Note update(Long id, Note note);
     Note updateStatus(Long id, NoteStatus noteStatus);
