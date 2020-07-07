@@ -5,7 +5,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import pl.maciejdudek.project.configuration.security.CheckPermissions;
+import pl.maciejdudek.project.configuration.security.SecurityPermissionChecker;
 import pl.maciejdudek.project.exceptions.UnauthorizedException;
 import pl.maciejdudek.project.model.DTO.NoteDTO;
 import pl.maciejdudek.project.model.Note;
@@ -24,14 +24,14 @@ public class NoteController {
 
     private final NoteServiceImpl noteService;
     private final ModelMapper modelMapper;
-    private final CheckPermissions checkPermissions;
+    private final SecurityPermissionChecker securityPermissionChecker;
 
     // only for admin
     @GetMapping("/notes")
     public List<NoteDTO> getAll(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size,
                                 @RequestParam(defaultValue = "ASC") Sort.Direction sort, @RequestParam(defaultValue = "id") String by,
                                 @AuthenticationPrincipal Principal principal) {
-        if(checkPermissions.isAdmin(principal.getName())) {
+        if(securityPermissionChecker.userIsAdmin(principal.getName())) {
             return noteService.getAll(page, size, sort, by).stream()
                     .map(note -> modelMapper.map(note, NoteDTO.class))
                     .collect(Collectors.toList());
@@ -42,7 +42,7 @@ public class NoteController {
     // only for admin and user who created note
     @GetMapping("/notes/{id}")
     public NoteDTO getOne(@PathVariable Long id, @AuthenticationPrincipal Principal principal) {
-        if(checkPermissions.isAdmin(principal.getName()) || checkPermissions.noteBelongsToUser(principal.getName(), id)) {
+        if(securityPermissionChecker.userIsAdmin(principal.getName()) || securityPermissionChecker.userIsOwnerOfNote(principal.getName(), id)) {
             return modelMapper.map(
                     noteService.getOne(id),
                     NoteDTO.class);
@@ -56,7 +56,7 @@ public class NoteController {
                                       @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size,
                                       @RequestParam(defaultValue = "ASC") Sort.Direction sort, @RequestParam(defaultValue = "id") String by,
                                       @AuthenticationPrincipal Principal principal) {
-        if(checkPermissions.isAdmin(principal.getName()) || checkPermissions.matchingId(principal.getName(), id)) {
+        if(securityPermissionChecker.userIsAdmin(principal.getName()) || securityPermissionChecker.usernameCorrespondsId(principal.getName(), id)) {
             return noteService.getAllByUser(id, page, size, sort, by).stream()
                     .map(note -> modelMapper.map(note, NoteDTO.class))
                     .collect(Collectors.toList());
@@ -76,7 +76,7 @@ public class NoteController {
     @PutMapping("/notes/{id}")
     public NoteDTO update(@PathVariable Long id, @RequestBody NoteDTO noteDTO,
                           @AuthenticationPrincipal Principal principal) {
-        if(checkPermissions.noteBelongsToUser(principal.getName(), id)) {
+        if(securityPermissionChecker.userIsOwnerOfNote(principal.getName(), id)) {
             return modelMapper.map(
                     noteService.update(id, modelMapper.map(noteDTO, Note.class)),
                     NoteDTO.class);
@@ -88,7 +88,7 @@ public class NoteController {
     @PutMapping("/notes/{id}/status")
     public NoteDTO updateStatus(@PathVariable Long id, @RequestBody Map<String, NoteStatus> statusJson,
                                 @AuthenticationPrincipal Principal principal) {
-        if(checkPermissions.noteBelongsToUser(principal.getName(), id)) {
+        if(securityPermissionChecker.userIsOwnerOfNote(principal.getName(), id)) {
             return modelMapper.map(
                     noteService.updateStatus(id, statusJson.get("status")),
                     NoteDTO.class
@@ -100,7 +100,7 @@ public class NoteController {
     // only for admin
     @DeleteMapping("/notes/{id}")
     public void delete(@PathVariable Long id, @AuthenticationPrincipal Principal principal) {
-        if(checkPermissions.isAdmin(principal.getName())) {
+        if(securityPermissionChecker.userIsAdmin(principal.getName())) {
             noteService.delete(id);
         } else {
             throw new UnauthorizedException();
