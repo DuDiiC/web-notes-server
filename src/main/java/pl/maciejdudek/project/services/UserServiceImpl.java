@@ -3,13 +3,10 @@ package pl.maciejdudek.project.services;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.ObjectNotFoundException;
 import org.springframework.stereotype.Service;
-import pl.maciejdudek.project.model.Note;
 import pl.maciejdudek.project.model.User;
-import pl.maciejdudek.project.repositories.NoteRepository;
 import pl.maciejdudek.project.repositories.UserRepository;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor

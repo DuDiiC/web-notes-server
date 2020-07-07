@@ -1,15 +1,12 @@
 package pl.maciejdudek.project.controllers;
 
-import org.modelmapper.Converter;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.web.bind.annotation.*;
 import pl.maciejdudek.project.model.DTO.UserDTO;
-import pl.maciejdudek.project.model.Note;
 import pl.maciejdudek.project.services.UserServiceImpl;
 
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @RestController

@@ -1,6 +1,5 @@
 package pl.maciejdudek.project.services;
 
-import org.springframework.data.jpa.repository.Query;
 import pl.maciejdudek.project.model.User;
 
 import java.util.List;
