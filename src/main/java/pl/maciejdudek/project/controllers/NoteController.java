@@ -20,11 +20,12 @@ public class NoteController {
     private final NoteServiceImpl noteService;
     private final ModelMapper modelMapper;
 
-    // todo: add pagination
+    // todo: add sorting
     // todo: add security (only for admin)
     @GetMapping("/notes")
-    public List<NoteDTO> getAll() {
-        return noteService.getAll().stream()
+    public List<NoteDTO> getAll(@RequestParam(defaultValue = "0") int page,
+                                @RequestParam(defaultValue = "5") int size) {
+        return noteService.getAll(page, size).stream()
                 .map(note -> modelMapper.map(note, NoteDTO.class))
                 .collect(Collectors.toList());
     }
@@ -37,11 +38,13 @@ public class NoteController {
                 NoteDTO.class);
     }
 
-    // todo: add pagination
+    // todo: add sorting
     // todo: add security (only for admin and user where userId equals id from request)
     @GetMapping("/users/{id}/notes")
-    public List<NoteDTO> getAllByUser(@PathVariable Long id) {
-        return noteService.getAllByUser(id).stream()
+    public List<NoteDTO> getAllByUser(@PathVariable Long id,
+                                      @RequestParam(defaultValue = "0") int page,
+                                      @RequestParam(defaultValue = "5") int size) {
+        return noteService.getAllByUser(id, page, size).stream()
                 .map(note -> modelMapper.map(note, NoteDTO.class))
                 .collect(Collectors.toList());
     }

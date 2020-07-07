@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface NoteService {
 
-    List<Note> getAll();
+    List<Note> getAll(int page, int size);
     Note getOne(Long id);
 
     Note save(Note note);
@@ -17,5 +17,5 @@ public interface NoteService {
 
     void delete(Long id);
 
-    List<Note> getAllByUser(Long id);
+    List<Note> getAllByUser(Long id, int page, int size);
 }

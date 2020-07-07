@@ -1,12 +1,14 @@
 package pl.maciejdudek.project.repositories;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import pl.maciejdudek.project.model.Note;
 
-import java.util.List;
-
 @Repository
 public interface NoteRepository extends JpaRepository<Note, Long> {
-    List<Note> findAllByUserId(Long id);
+
+    Page<Note> findAll(Pageable page);
+    Page<Note> findAllByUserId(Long id, Pageable page);
 }

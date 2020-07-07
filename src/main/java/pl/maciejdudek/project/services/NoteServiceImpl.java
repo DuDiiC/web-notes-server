@@ -2,6 +2,8 @@ package pl.maciejdudek.project.services;
 
 import lombok.RequiredArgsConstructor;
 import org.hibernate.ObjectNotFoundException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import pl.maciejdudek.project.model.Note;
 import pl.maciejdudek.project.model.NoteStatus;
@@ -10,6 +12,7 @@ import pl.maciejdudek.project.repositories.UserRepository;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -20,8 +23,12 @@ public class NoteServiceImpl implements NoteService{
     private final UserRepository userRepository;
 
     @Override
-    public List<Note> getAll() {
-        return noteRepository.findAll();
+    public List<Note> getAll(int page, int size) {
+        Page<Note> pagedResult = noteRepository.findAll(PageRequest.of(page, size));
+        if(pagedResult.hasContent()) {
+            return pagedResult.getContent();
+        }
+        return new ArrayList<>();
     }
 
     @Override
@@ -31,8 +38,12 @@ public class NoteServiceImpl implements NoteService{
     }
 
     @Override
-    public List<Note> getAllByUser(Long id) {
-        return noteRepository.findAllByUserId(id);
+    public List<Note> getAllByUser(Long id, int page, int size) {
+        Page<Note> pagedResult = noteRepository.findAllByUserId(id, PageRequest.of(page, size));
+        if(pagedResult.hasContent()) {
+            return pagedResult.getContent();
+        }
+        return new ArrayList<>();
     }
 
     @Override
