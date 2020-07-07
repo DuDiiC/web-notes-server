@@ -1,4 +1,4 @@
-package pl.maciejdudek.project.configuration.jtw;
+package pl.maciejdudek.project.configuration.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

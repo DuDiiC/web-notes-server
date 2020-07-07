@@ -1,4 +1,4 @@
-package pl.maciejdudek.project.configuration.jtw;
+package pl.maciejdudek.project.configuration.security;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;

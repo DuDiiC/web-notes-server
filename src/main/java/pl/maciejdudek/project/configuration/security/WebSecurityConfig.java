@@ -1,4 +1,4 @@
-package pl.maciejdudek.project.configuration;
+package pl.maciejdudek.project.configuration.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,10 +12,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
-import pl.maciejdudek.project.configuration.jtw.JsonObjectAuthenticationFilter;
-import pl.maciejdudek.project.configuration.jtw.JwtAuthenticationFilter;
-import pl.maciejdudek.project.configuration.jtw.RestAuthenticationFailureHandler;
-import pl.maciejdudek.project.configuration.jtw.RestAuthenticationSuccessHandler;
 import pl.maciejdudek.project.services.UserDetailsServiceImpl;
 
 @Configuration
