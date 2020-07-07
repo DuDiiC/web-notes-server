@@ -2,6 +2,7 @@ package pl.maciejdudek.project.controllers;
 
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 import pl.maciejdudek.project.model.DTO.UserDTO;
 import pl.maciejdudek.project.services.UserServiceImpl;
@@ -17,11 +18,11 @@ public class UserController {
     private final UserServiceImpl userService;
     private final ModelMapper modelMapper;
 
-    // todo: add pagination
     // todo: add security (only for admin)
     @GetMapping("/users")
-    public List<UserDTO> getAll() {
-        return userService.getAll().stream()
+    public List<UserDTO> getAll(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size,
+                                @RequestParam(defaultValue = "ASC") Sort.Direction sort, @RequestParam(defaultValue = "id") String by) {
+        return userService.getAll(page, size, sort, by).stream()
                 .map(user -> modelMapper.map(user, UserDTO.class))
                 .collect(Collectors.toList());
     }

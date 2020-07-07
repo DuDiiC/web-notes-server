@@ -2,6 +2,7 @@ package pl.maciejdudek.project.controllers;
 
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 import pl.maciejdudek.project.model.DTO.NoteDTO;
 import pl.maciejdudek.project.model.Note;
@@ -20,11 +21,11 @@ public class NoteController {
     private final NoteServiceImpl noteService;
     private final ModelMapper modelMapper;
 
-    // todo: add pagination
     // todo: add security (only for admin)
     @GetMapping("/notes")
-    public List<NoteDTO> getAll() {
-        return noteService.getAll().stream()
+    public List<NoteDTO> getAll(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size,
+                                @RequestParam(defaultValue = "ASC") Sort.Direction sort, @RequestParam(defaultValue = "id") String by) {
+        return noteService.getAll(page, size, sort, by).stream()
                 .map(note -> modelMapper.map(note, NoteDTO.class))
                 .collect(Collectors.toList());
     }
@@ -37,11 +38,12 @@ public class NoteController {
                 NoteDTO.class);
     }
 
-    // todo: add pagination
     // todo: add security (only for admin and user where userId equals id from request)
     @GetMapping("/users/{id}/notes")
-    public List<NoteDTO> getAllByUser(@PathVariable Long id) {
-        return noteService.getAllByUser(id).stream()
+    public List<NoteDTO> getAllByUser(@PathVariable Long id,
+                                      @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size,
+                                      @RequestParam(defaultValue = "ASC") Sort.Direction sort, @RequestParam(defaultValue = "id") String by) {
+        return noteService.getAllByUser(id, page, size, sort, by).stream()
                 .map(note -> modelMapper.map(note, NoteDTO.class))
                 .collect(Collectors.toList());
     }
