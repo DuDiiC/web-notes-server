@@ -38,9 +38,4 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByUsernameIgnoringCase(username)
                 .orElseThrow(() -> new ObjectNotFoundException(username, "User"));
     }
-
-    @Override
-    public User register(User newUser) {
-        return null;
-    }
 }
