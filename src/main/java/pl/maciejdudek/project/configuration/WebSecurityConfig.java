@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
@@ -64,13 +65,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // API
                 .antMatchers("/api/**").hasAnyRole("USER", "ADMIN")
 //                .antMatchers("/api/**").permitAll()
-                .anyRequest().authenticated()
+                // stateless session
+                .and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 // H2 console from browser
                 .and()
                 .headers().frameOptions().disable()
                 // authentication filter
                 .and()
                 .addFilter(authenticationFilter())
+                .addFilter(new JwtAuthenticationFilter(authenticationManager(), userDetailsService, secret))
                 // handling exception
                 .exceptionHandling()
                 .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED));
