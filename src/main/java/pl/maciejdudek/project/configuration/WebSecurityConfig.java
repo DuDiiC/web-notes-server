@@ -1,5 +1,6 @@
 package pl.maciejdudek.project.configuration;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,6 +11,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
+import pl.maciejdudek.project.configuration.jtw.JsonObjectAuthenticationFilter;
+import pl.maciejdudek.project.configuration.jtw.RestAuthenticationFailureHandler;
+import pl.maciejdudek.project.configuration.jtw.RestAuthenticationSuccessHandler;
 import pl.maciejdudek.project.services.UserDetailsServiceImpl;
 
 @Configuration
@@ -17,6 +21,9 @@ import pl.maciejdudek.project.services.UserDetailsServiceImpl;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserDetailsServiceImpl userDetailsService;
+    private final ObjectMapper objectMapper;
+    private final RestAuthenticationSuccessHandler successHandler;
+    private final RestAuthenticationFailureHandler failureHandler;
 
     @Bean
     public PasswordEncoder getPasswordEncoder() {
@@ -25,7 +32,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService);
+        auth.userDetailsService(userDetailsService);;
     }
 
     @Override
@@ -41,13 +48,27 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/h2-console/**").permitAll()
                 // register
                 .antMatchers("/register").permitAll()
+                .antMatchers("/login").permitAll()
                 // API
-//                .antMatchers("/api/*").hasAnyRole("ADMIN", "USER")
-                .antMatchers("/api/*").permitAll()
+                .antMatchers("/api/**").hasAnyRole("USER", "ADMIN")
+//                .antMatchers("/api/**").permitAll()
+                .anyRequest().authenticated()
+                // H2 console from browser
                 .and()
-                .formLogin().permitAll()
+                .headers().frameOptions().disable()
+                // authentication filter
                 .and()
+                .addFilter(authenticationFilter())
+                // handling exception
                 .exceptionHandling()
                 .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED));
+    }
+
+    public JsonObjectAuthenticationFilter authenticationFilter() throws Exception {
+        JsonObjectAuthenticationFilter authenticationFilter = new JsonObjectAuthenticationFilter(objectMapper);
+        authenticationFilter.setAuthenticationSuccessHandler(successHandler);
+        authenticationFilter.setAuthenticationFailureHandler(failureHandler);
+        authenticationFilter.setAuthenticationManager(super.authenticationManager());
+        return authenticationFilter;
     }
 }
