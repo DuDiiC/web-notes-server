@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.hibernate.ObjectNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import pl.maciejdudek.project.model.Note;
 import pl.maciejdudek.project.model.NoteStatus;
@@ -23,8 +24,8 @@ public class NoteServiceImpl implements NoteService{
     private final UserRepository userRepository;
 
     @Override
-    public List<Note> getAll(int page, int size) {
-        Page<Note> pagedResult = noteRepository.findAll(PageRequest.of(page, size));
+    public List<Note> getAll(int page, int size, Sort.Direction sort, String by) {
+        Page<Note> pagedResult = noteRepository.findAll(PageRequest.of(page, size, Sort.by(sort, by)));
         if(pagedResult.hasContent()) {
             return pagedResult.getContent();
         }
@@ -38,8 +39,8 @@ public class NoteServiceImpl implements NoteService{
     }
 
     @Override
-    public List<Note> getAllByUser(Long id, int page, int size) {
-        Page<Note> pagedResult = noteRepository.findAllByUserId(id, PageRequest.of(page, size));
+    public List<Note> getAllByUser(Long id, int page, int size, Sort.Direction sort, String by) {
+        Page<Note> pagedResult = noteRepository.findAllByUserId(id, PageRequest.of(page, size, Sort.by(sort, by)));
         if(pagedResult.hasContent()) {
             return pagedResult.getContent();
         }
