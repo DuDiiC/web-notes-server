@@ -1,7 +1,7 @@
 package pl.maciejdudek.project.controllers;
 
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import pl.maciejdudek.project.model.DTO.NoteDTO;
 import pl.maciejdudek.project.model.Note;
@@ -14,16 +14,11 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
+@RequiredArgsConstructor
 public class NoteController {
 
     private final NoteServiceImpl noteService;
     private final ModelMapper modelMapper;
-
-    @Autowired
-    public NoteController(NoteServiceImpl noteService, ModelMapper modelMapper) {
-        this.noteService = noteService;
-        this.modelMapper = modelMapper;
-    }
 
     @GetMapping("/notes")
     public List<NoteDTO> getAll() {

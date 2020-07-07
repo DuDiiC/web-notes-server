@@ -1,5 +1,6 @@
 package pl.maciejdudek.project.controllers;
 
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -9,15 +10,11 @@ import pl.maciejdudek.project.model.User;
 import pl.maciejdudek.project.services.RegisterServiceImpl;
 
 @RestController
+@RequiredArgsConstructor
 public class RegisterController {
 
     private final RegisterServiceImpl registerService;
     private final ModelMapper modelMapper;
-
-    public RegisterController(RegisterServiceImpl registerService, ModelMapper modelMapper) {
-        this.registerService = registerService;
-        this.modelMapper = modelMapper;
-    }
 
     @PostMapping("/register")
     public UserDTO register(@RequestBody User user) {

@@ -1,8 +1,8 @@
 package pl.maciejdudek.project.controllers;
 
 import org.modelmapper.Converter;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import pl.maciejdudek.project.model.DTO.UserDTO;
 import pl.maciejdudek.project.model.Note;
@@ -14,16 +14,11 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(("/api"))
+@RequiredArgsConstructor
 public class UserController {
 
     private final UserServiceImpl userService;
     private final ModelMapper modelMapper;
-
-    @Autowired
-    public UserController(UserServiceImpl userService, ModelMapper modelMapper) {
-        this.userService = userService;
-        this.modelMapper = modelMapper;
-    }
 
     @GetMapping("/users")
     public List<UserDTO> getAll() {

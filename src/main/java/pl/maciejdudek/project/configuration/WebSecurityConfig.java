@@ -1,6 +1,6 @@
 package pl.maciejdudek.project.configuration;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -11,14 +11,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import pl.maciejdudek.project.services.UserDetailsServiceImpl;
 
 @Configuration
+@RequiredArgsConstructor
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserDetailsServiceImpl userDetailsService;
-
-    @Autowired
-    public WebSecurityConfig(UserDetailsServiceImpl userDetailsService) {
-        this.userDetailsService = userDetailsService;
-    }
 
     @Bean
     public PasswordEncoder getPasswordEncoder() {

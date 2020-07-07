@@ -1,7 +1,7 @@
 package pl.maciejdudek.project.services;
 
+import lombok.RequiredArgsConstructor;
 import org.hibernate.ObjectNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.maciejdudek.project.model.Note;
 import pl.maciejdudek.project.model.User;
@@ -12,17 +12,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    private final NoteRepository noteRepository;
-
-    @Autowired
-    public UserServiceImpl(UserRepository userRepository, NoteRepository noteRepository) {
-        this.userRepository = userRepository;
-        this.noteRepository = noteRepository;
-    }
-
 
     @Override
     public List<User> getAll() {

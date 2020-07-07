@@ -1,7 +1,7 @@
 package pl.maciejdudek.project.services;
 
+import lombok.RequiredArgsConstructor;
 import org.hibernate.ObjectNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.maciejdudek.project.model.Note;
 import pl.maciejdudek.project.model.NoteStatus;
@@ -13,16 +13,11 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class NoteServiceImpl implements NoteService{
 
     private final NoteRepository noteRepository;
     private final UserRepository userRepository;
-
-    @Autowired
-    public NoteServiceImpl(NoteRepository noteRepository, UserRepository userRepository) {
-        this.noteRepository = noteRepository;
-        this.userRepository = userRepository;
-    }
 
     @Override
     public List<Note> getAll() {
