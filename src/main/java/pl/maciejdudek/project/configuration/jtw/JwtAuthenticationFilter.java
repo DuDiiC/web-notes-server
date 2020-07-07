@@ -24,11 +24,11 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
 
     private final UserDetailsServiceImpl userDetailsService;
 
-    public JwtAuthenticationFilter(AuthenticationManager authenticationManager, String secret,
-                                   UserDetailsServiceImpl userDetailsService) {
+    public JwtAuthenticationFilter(AuthenticationManager authenticationManager,
+                                   UserDetailsServiceImpl userDetailsService, String secret) {
         super(authenticationManager);
-        this.secret = secret;
         this.userDetailsService = userDetailsService;
+        this.secret = secret;
     }
 
     @Override
