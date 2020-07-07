@@ -12,7 +12,7 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User, Long> {
 
     @Override
-    @Query("select distinct u from User u join fetch u.notes")
+    @Query("select distinct u from User u left join fetch u.notes")
     List<User> findAll();
 
     Optional<User> findByUsername(String username);
