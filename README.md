@@ -6,8 +6,8 @@ Application for managing user notes. Implemented functionalities:
   
   - [x] user management using the `UserDetails` class extension
   - [x] registration
-  - [x] stateless session - verifying users using JWT
-  - [x] email verification during registration
+  - [x] stateless session - verifying users using JWT (expired time: hour per token)
+  - [x] email verification during registration (exipred time: 24 hours, the application uses gmail as a example)
   - [x] endpoint security for individual roles and users
   - [x] passwords stored in the database in a hash form
 
@@ -18,7 +18,7 @@ Application for managing user notes. Implemented functionalities:
 
 - Spring Framework:
 
-  - [x] RESTful API for `User` and `Note` with DTO classes (conversion using `ModelMapper`)
+  - [x] RESTful API for `User` and `Note` with DTO classes (conversion using `ModelMapper`) **level 2 in Richardson Maturity Model**
   - [x] controllers with implemented pagination, sorting and security, using services
   - [x] full error handling for API
 
