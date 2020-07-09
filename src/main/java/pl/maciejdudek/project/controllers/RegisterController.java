@@ -17,7 +17,6 @@ public class RegisterController {
     private final RegisterServiceImpl registerService;
     private final ModelMapper modelMapper;
 
-    // todo: add checking if user already exists
     @PostMapping("/register")
     public UserDTO register(@RequestBody CredentialsDTO creds) {
         return modelMapper.map(
