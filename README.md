@@ -7,7 +7,7 @@ Application for managing user notes. Implemented functionalities:
   - [x] user management using the `UserDetails` class extension
   - [x] registration
   - [x] stateless session - verifying users using JWT
-  - [ ] email verification during registration
+  - [x] email verification during registration
   - [x] endpoint security for individual roles and users
   - [x] passwords stored in the database in a hash form
 
