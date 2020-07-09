@@ -2,11 +2,10 @@ package pl.maciejdudek.project.controllers;
 
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pl.maciejdudek.project.model.DTO.RegisterDTO;
 import pl.maciejdudek.project.model.DTO.UserDTO;
+import pl.maciejdudek.project.model.RegisterVerificationToken;
 import pl.maciejdudek.project.model.User;
 import pl.maciejdudek.project.services.RegisterServiceImpl;
 
@@ -22,5 +21,10 @@ public class RegisterController {
         return modelMapper.map(
                 registerService.register(modelMapper.map(user, User.class)),
                 UserDTO.class);
+    }
+
+    @GetMapping("/registrationConfirm")
+    public String confirmRegistration(@RequestParam("token") String token) {
+        return registerService.confirmRegistration(token);
     }
 }
