@@ -20,9 +20,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getAll(int page, int size, Sort.Direction sort, String by) {
-        Page<User> pagedResult = userRepository.findAll(PageRequest.of(page, size, Sort.by(sort, by)));
-        if(pagedResult.hasContent()) {
-            return pagedResult.getContent();
+        Page<Long> pagedIds = userRepository.findAllIds(PageRequest.of(page, size, Sort.by(sort, by)));
+        if(pagedIds.hasContent()) {
+            return userRepository.findAll(pagedIds.getContent());
         }
         return new ArrayList<>();
     }
