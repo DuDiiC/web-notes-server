@@ -21,6 +21,7 @@ public class RegisterServiceImpl implements RegisterService {
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRole("ROLE_USER");
+        user.setEnabled(false);
         return userRepository.save(user);
     }
 }

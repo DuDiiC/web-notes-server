@@ -24,6 +24,7 @@ public class User implements UserDetails {
     private String username;
     private String password;
     private String role;
+    private boolean enabled;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private Set<Note> notes = new HashSet<>();
@@ -60,6 +61,6 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return enabled;
     }
 }
