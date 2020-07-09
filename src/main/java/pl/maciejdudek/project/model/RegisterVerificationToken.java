@@ -19,11 +19,11 @@ public class RegisterVerificationToken {
 
     private String token;
 
-    @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER)
+    @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(nullable = false, name="userId")
     private User user;
 
-    private Date expiryDate;
+    private Date expiryDate = calculateExpiryDate(EXPIRATION);
 
     private Date calculateExpiryDate(int expiryTimeInMunites) {
         Calendar calendar = Calendar.getInstance();

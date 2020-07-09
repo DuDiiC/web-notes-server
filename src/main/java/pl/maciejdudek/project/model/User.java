@@ -25,6 +25,8 @@ public class User implements UserDetails {
     private String password;
     private String role;
     private boolean enabled;
+    @OneToOne(mappedBy = "user")
+    private RegisterVerificationToken registerVerificationToken;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private Set<Note> notes = new HashSet<>();
