@@ -1,4 +1,4 @@
-package pl.maciejdudek.project.tmp;
+package pl.maciejdudek.project.services.register;
 
 import lombok.Getter;
 import lombok.Setter;

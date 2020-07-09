@@ -1,4 +1,4 @@
-package pl.maciejdudek.project.tmp;
+package pl.maciejdudek.project.services.register;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

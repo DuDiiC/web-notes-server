@@ -10,7 +10,7 @@ import pl.maciejdudek.project.model.RegisterVerificationToken;
 import pl.maciejdudek.project.model.User;
 import pl.maciejdudek.project.repositories.RegisterTokenRepository;
 import pl.maciejdudek.project.repositories.UserRepository;
-import pl.maciejdudek.project.tmp.OnRegistrationCompleteEvent;
+import pl.maciejdudek.project.services.register.OnRegistrationCompleteEvent;
 
 import javax.transaction.Transactional;
 import java.util.Calendar;
