@@ -21,24 +21,28 @@ public class BootstrapData {
         kamil.setUsername("Kamil");
         kamil.setPassword(passwordEncoder.encode("Kamil123"));
         kamil.setRole("ROLE_ADMIN");
+        kamil.setEnabled(true);
 
         User marcin = new User();
         marcin.setEmail("marcin@mail.com");
         marcin.setUsername("Marcin");
         marcin.setPassword(passwordEncoder.encode("Marcin123"));
         marcin.setRole("ROLE_USER");
+        marcin.setEnabled(true);
 
         User maciej = new User();
         maciej.setEmail("maciej@mail.com");
         maciej.setUsername("Maciej");
         maciej.setPassword(passwordEncoder.encode("Maciej123"));
         maciej.setRole("ROLE_USER");
+        maciej.setEnabled(true);
 
         User dawid = new User();
         dawid.setEmail("dawid@mail.com");
         dawid.setUsername("Dawid");
         dawid.setPassword(passwordEncoder.encode("Dawid123"));
         dawid.setRole("ROLE_USER");
+        dawid.setEnabled(true);
 
         userRepository.save(kamil);
         userRepository.save(marcin);
