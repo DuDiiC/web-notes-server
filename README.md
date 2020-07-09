@@ -24,6 +24,6 @@ Application for managing user notes. Implemented functionalities:
 
 - others:
 
-  - [x] implemented (swagger)[https://swagger.io/] for API documentation
+  - [x] implemented [swagger](https://swagger.io/) for API documentation
   - [ ] implementation of tests with JUnit and Mockito
   - [ ] use of the Value-Object pattern for entities
