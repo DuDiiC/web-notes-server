@@ -5,7 +5,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import pl.maciejdudek.project.model.DTO.CredentialsDTO;
+import pl.maciejdudek.project.model.DTO.LoginDTO;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -29,7 +29,7 @@ public class JsonObjectAuthenticationFilter extends UsernamePasswordAuthenticati
             while((line = reader.readLine()) != null) {
                 sb.append(line);
             }
-            CredentialsDTO authRequest = objectMapper.readValue(sb.toString(), CredentialsDTO.class);
+            LoginDTO authRequest = objectMapper.readValue(sb.toString(), LoginDTO.class);
             UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
                     authRequest.getUsername(), authRequest.getPassword()
             );

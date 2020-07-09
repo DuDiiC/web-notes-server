@@ -17,21 +17,25 @@ public class BootstrapData {
     @Autowired
     public BootstrapData(UserRepository userRepository, NoteRepository noteRepository, PasswordEncoder passwordEncoder) {
         User kamil = new User();
+        kamil.setEmail("kamil@mail.com");
         kamil.setUsername("Kamil");
         kamil.setPassword(passwordEncoder.encode("Kamil123"));
         kamil.setRole("ROLE_ADMIN");
 
         User marcin = new User();
+        marcin.setEmail("marcin@mail.com");
         marcin.setUsername("Marcin");
         marcin.setPassword(passwordEncoder.encode("Marcin123"));
         marcin.setRole("ROLE_USER");
 
         User maciej = new User();
+        maciej.setEmail("maciej@mail.com");
         maciej.setUsername("Maciej");
         maciej.setPassword(passwordEncoder.encode("Maciej123"));
         maciej.setRole("ROLE_USER");
 
         User dawid = new User();
+        dawid.setEmail("dawid@mail.com");
         dawid.setUsername("Dawid");
         dawid.setPassword(passwordEncoder.encode("Dawid123"));
         dawid.setRole("ROLE_USER");
