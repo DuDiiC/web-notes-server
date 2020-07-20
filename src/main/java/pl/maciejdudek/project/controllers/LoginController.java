@@ -9,7 +9,7 @@ import pl.maciejdudek.project.model.DTO.LoginDTO;
 @RestController
 public class LoginController {
 
-    @CrossOrigin
+    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/login")
     public void login(@RequestBody LoginDTO credentials) {
     }
