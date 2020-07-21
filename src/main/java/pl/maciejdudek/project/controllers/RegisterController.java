@@ -5,10 +5,10 @@ import org.modelmapper.ModelMapper;
 import org.springframework.web.bind.annotation.*;
 import pl.maciejdudek.project.model.DTO.RegisterDTO;
 import pl.maciejdudek.project.model.DTO.UserDTO;
-import pl.maciejdudek.project.model.RegisterVerificationToken;
 import pl.maciejdudek.project.model.User;
 import pl.maciejdudek.project.services.RegisterServiceImpl;
 
+@CrossOrigin(exposedHeaders = "Authorization")
 @RestController
 @RequiredArgsConstructor
 public class RegisterController {

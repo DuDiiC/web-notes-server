@@ -14,6 +14,7 @@ import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@CrossOrigin(exposedHeaders = "Authorization")
 @RestController
 @RequestMapping(("/api"))
 @RequiredArgsConstructor
