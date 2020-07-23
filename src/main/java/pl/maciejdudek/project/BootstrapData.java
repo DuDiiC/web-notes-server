@@ -86,14 +86,14 @@ public class BootstrapData {
 
         Note note6 = new Note();
         note6.setTitle("Notatka 6");
-        note6.setContent("Zobaczymy jak wygląda kod:\n\twcięcie");
+        note6.setContent("Zobaczymy jak wygląda kod:\n\n\t\twcięcie");
         note6.setUser(maciej);
         note6.setCreatedAt(LocalDateTime.now());
         note6.setNoteStatus(NoteStatus.ACTIVE);
 
         Note note7 = new Note();
         note7.setTitle("Notatka 7");
-        note7.setContent("Albo czy działa tabela:\n| | |\n|:---:|:---:|\n| pierwsza kolumna | drugia kolumna |\n_pogrubienie_ i *pogrubienie*");
+        note7.setContent("Albo czy działa tabela:\n\n| 1 | 2 |\n|:---:|:---:|\n| pierwsza kolumna | drugia kolumna |\n\n_pogrubienie_ i *pogrubienie*");
         note7.setUser(maciej);
         note7.setCreatedAt(LocalDateTime.now());
         note7.setNoteStatus(NoteStatus.ACTIVE);
