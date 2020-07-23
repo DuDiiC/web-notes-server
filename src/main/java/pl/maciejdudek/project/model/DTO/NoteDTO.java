@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 @Getter @Setter
 public class NoteDTO {
     private Long id;
+    private String title;
     private String content;
     private LocalDateTime createdAt;
     private NoteStatus noteStatus;

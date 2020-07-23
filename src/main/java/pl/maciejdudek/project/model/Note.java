@@ -13,6 +13,8 @@ public class Note {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String title;
+
     private String content;
 
     @Column(name="created_at", columnDefinition = "TIMESTAMP")
