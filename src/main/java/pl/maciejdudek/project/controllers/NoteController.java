@@ -29,7 +29,7 @@ public class NoteController {
 
     // only for admin
     @GetMapping("/notes")
-    public List<NoteDTO> getAll(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size,
+    public List<NoteDTO> getAll(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size,
                                 @RequestParam(defaultValue = "ASC") Sort.Direction sort, @RequestParam(defaultValue = "id") String by,
                                 @AuthenticationPrincipal Principal principal) {
         if(securityPermissionChecker.userIsAdmin(principal.getName())) {
@@ -54,7 +54,7 @@ public class NoteController {
     // only for admin and user where userId equals id from request
     @GetMapping("/users/{id}/notes")
     public List<NoteDTO> getAllByUser(@PathVariable Long id,
-                                      @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size,
+                                      @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size,
                                       @RequestParam(defaultValue = "ASC") Sort.Direction sort, @RequestParam(defaultValue = "id") String by,
                                       @AuthenticationPrincipal Principal principal) {
         if(securityPermissionChecker.userIsAdmin(principal.getName()) || securityPermissionChecker.usernameCorrespondsId(principal.getName(), id)) {
