@@ -64,13 +64,9 @@ public class NoteServiceImpl implements NoteService{
     public Note update(Long id, Note note) {
         Note noteToUpdate = noteRepository.findById(id)
                 .orElseThrow(() -> new ObjectNotFoundException(id, "Note"));
+        noteToUpdate.setTitle(note.getTitle());
         noteToUpdate.setContent(note.getContent());
         return noteToUpdate;
-    }
-
-    @Override
-    public void delete(Long id) {
-        noteRepository.deleteById(id);
     }
 
     @Override
@@ -80,5 +76,10 @@ public class NoteServiceImpl implements NoteService{
                 .orElseThrow(() -> new ObjectNotFoundException(id, "Note"));
         note.setNoteStatus(noteStatus);
         return note;
+    }
+
+    @Override
+    public void delete(Long id) {
+        noteRepository.deleteById(id);
     }
 }

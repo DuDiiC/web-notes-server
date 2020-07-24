@@ -90,7 +90,7 @@ public class NoteController {
                                 @AuthenticationPrincipal Principal principal) {
         if(securityPermissionChecker.userIsOwnerOfNote(principal.getName(), id)) {
             return modelMapper.map(
-                    noteService.updateStatus(id, statusJson.get("status")),
+                    noteService.updateStatus(id, statusJson.get("noteStatus")),
                     NoteDTO.class
             );
         }
