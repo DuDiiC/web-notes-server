@@ -21,7 +21,7 @@ public class RegistrationListener implements ApplicationListener<OnRegistrationC
     @Autowired
     public RegistrationListener(JavaMailSender javaMailSender,
                                 RegisterService registerService,
-                                @Value("${app.url}") String appUrl) {
+                                @Value("${app.url.heroku}") String appUrl) {
         this.javaMailSender = javaMailSender;
         this.registerService = registerService;
         this.appUrl = appUrl;
