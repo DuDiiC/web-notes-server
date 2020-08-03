@@ -48,6 +48,15 @@ public class NoteServiceImpl implements NoteService{
     }
 
     @Override
+    public List<Note> getAllByUserAndNoteStatus(Long id, NoteStatus noteStatus, int page, int size, Sort.Direction sort, String by) {
+        Page<Note> pagedResult = noteRepository.findAllByUserIdAndNoteStatus(id, noteStatus, PageRequest.of(page, size, Sort.by(sort, by)));
+        if(pagedResult.hasContent()) {
+            return pagedResult.getContent();
+        }
+        return new ArrayList<>();
+    }
+
+    @Override
     public Note save(Note note, String username) {
         note.setCreatedAt(LocalDateTime.now());
         note.setNoteStatus(NoteStatus.ACTIVE);

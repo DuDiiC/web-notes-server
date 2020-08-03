@@ -53,14 +53,20 @@ public class NoteController {
 
     // only for admin and user where userId equals id from request
     @GetMapping("/users/{id}/notes")
-    public List<NoteDTO> getAllByUser(@PathVariable Long id,
+    public List<NoteDTO> getAllByUser(@PathVariable Long id, @RequestParam(required = false) NoteStatus noteStatus,
                                       @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "100") int size,
                                       @RequestParam(defaultValue = "ASC") Sort.Direction sort, @RequestParam(defaultValue = "id") String by,
                                       @AuthenticationPrincipal Principal principal) {
         if(securityPermissionChecker.userIsAdmin(principal.getName()) || securityPermissionChecker.usernameCorrespondsId(principal.getName(), id)) {
-            return noteService.getAllByUser(id, page, size, sort, by).stream()
-                    .map(note -> modelMapper.map(note, NoteDTO.class))
-                    .collect(Collectors.toList());
+            if(noteStatus == null) {
+                return noteService.getAllByUser(id, page, size, sort, by).stream()
+                        .map(note -> modelMapper.map(note, NoteDTO.class))
+                        .collect(Collectors.toList());
+            } else {
+                return noteService.getAllByUserAndNoteStatus(id, noteStatus, page, size, sort, by).stream()
+                        .map(note -> modelMapper.map(note, NoteDTO.class))
+                        .collect(Collectors.toList());
+            }
         }
         throw new UnauthorizedException();
     }
