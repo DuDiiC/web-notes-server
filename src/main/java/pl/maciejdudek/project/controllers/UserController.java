@@ -41,7 +41,8 @@ public class UserController {
     @GetMapping("/users/{id}")
     public UserDTO getOne(@PathVariable Long id,
                           @AuthenticationPrincipal Principal principal) {
-        if(securityPermissionChecker.userIsAdmin(principal.getName()) || securityPermissionChecker.usernameCorrespondsId(principal.getName(), id)) {
+        String requestUsername = principal.getName();
+        if(securityPermissionChecker.userIsAdmin(requestUsername) || securityPermissionChecker.usernameCorrespondsId(requestUsername, id)) {
             return modelMapper.map(userService.getOne(id), UserDTO.class);
         }
         throw new UnauthorizedException();
@@ -51,7 +52,8 @@ public class UserController {
     @GetMapping("/users/name")
     public UserDTO getOneByName(@RequestParam("username") String username,
                                 @AuthenticationPrincipal Principal principal) {
-        if(securityPermissionChecker.userIsAdmin(principal.getName()) || principal.getName().equals(username)) {
+        String requestUsername = principal.getName();
+        if(securityPermissionChecker.userIsAdmin(requestUsername) || requestUsername.equals(username)) {
             return modelMapper.map(userService.getOneByName(username), UserDTO.class);
         }
         throw new UnauthorizedException();

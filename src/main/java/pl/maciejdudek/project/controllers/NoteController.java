@@ -43,7 +43,8 @@ public class NoteController {
     // only for admin and user who created note
     @GetMapping("/notes/{id}")
     public NoteDTO getOne(@PathVariable Long id, @AuthenticationPrincipal Principal principal) {
-        if(securityPermissionChecker.userIsAdmin(principal.getName()) || securityPermissionChecker.userIsOwnerOfNote(principal.getName(), id)) {
+        String requestUsername = principal.getName();
+        if(securityPermissionChecker.userIsAdmin(requestUsername) || securityPermissionChecker.userIsOwnerOfNote(requestUsername, id)) {
             return modelMapper.map(
                     noteService.getOne(id),
                     NoteDTO.class);
@@ -57,7 +58,8 @@ public class NoteController {
                                       @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "100") int size,
                                       @RequestParam(defaultValue = "ASC") Sort.Direction sort, @RequestParam(defaultValue = "id") String by,
                                       @AuthenticationPrincipal Principal principal) {
-        if(securityPermissionChecker.userIsAdmin(principal.getName()) || securityPermissionChecker.usernameCorrespondsId(principal.getName(), id)) {
+        String requestUsername = principal.getName();
+        if(securityPermissionChecker.userIsAdmin(requestUsername) || securityPermissionChecker.usernameCorrespondsId(requestUsername, id)) {
             if(noteStatus == null) {
                 return noteService.getAllByUser(id, page, size, sort, by).stream()
                         .map(note -> modelMapper.map(note, NoteDTO.class))
@@ -106,7 +108,8 @@ public class NoteController {
     // only for admin and user who created note
     @DeleteMapping("/notes/{id}")
     public void delete(@PathVariable Long id, @AuthenticationPrincipal Principal principal) {
-        if(securityPermissionChecker.userIsAdmin(principal.getName()) || securityPermissionChecker.userIsOwnerOfNote(principal.getName(), id)) {
+        String requestUsername = principal.getName();
+        if(securityPermissionChecker.userIsAdmin(requestUsername) || securityPermissionChecker.userIsOwnerOfNote(requestUsername, id)) {
             noteService.delete(id);
         } else {
             throw new UnauthorizedException();
