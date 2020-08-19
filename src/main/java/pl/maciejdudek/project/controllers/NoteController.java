@@ -103,10 +103,10 @@ public class NoteController {
         throw new UnauthorizedException();
     }
 
-    // only for admin
+    // only for admin and user who created note
     @DeleteMapping("/notes/{id}")
     public void delete(@PathVariable Long id, @AuthenticationPrincipal Principal principal) {
-        if(securityPermissionChecker.userIsAdmin(principal.getName())) {
+        if(securityPermissionChecker.userIsAdmin(principal.getName()) || securityPermissionChecker.userIsOwnerOfNote(principal.getName(), id)) {
             noteService.delete(id);
         } else {
             throw new UnauthorizedException();
