@@ -3,7 +3,7 @@ package pl.maciejdudek.project.model;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 @Entity
 @Data
@@ -18,7 +18,7 @@ public class Note {
     private String content;
 
     @Column(name="created_at", columnDefinition = "TIMESTAMP")
-    private LocalDateTime createdAt;
+    private OffsetDateTime createdAt;
 
     @Enumerated(EnumType.STRING)
     private NoteStatus noteStatus;

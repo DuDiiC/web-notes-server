@@ -12,7 +12,7 @@ import pl.maciejdudek.project.repositories.NoteRepository;
 import pl.maciejdudek.project.repositories.UserRepository;
 
 import javax.transaction.Transactional;
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,7 +58,7 @@ public class NoteServiceImpl implements NoteService{
 
     @Override
     public Note save(Note note, String username) {
-        note.setCreatedAt(LocalDateTime.now());
+        note.setCreatedAt(OffsetDateTime.now());
         note.setNoteStatus(NoteStatus.ACTIVE);
         note.setUser(
                 userRepository.findByUsername(

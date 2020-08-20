@@ -9,7 +9,7 @@ import pl.maciejdudek.project.model.User;
 import pl.maciejdudek.project.repositories.NoteRepository;
 import pl.maciejdudek.project.repositories.UserRepository;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 @Configuration
 public class BootstrapData {
@@ -53,70 +53,70 @@ public class BootstrapData {
         note1.setTitle("Notatka 1");
         note1.setContent("Treść notatki pierwszej.");
         note1.setUser(marcin);
-        note1.setCreatedAt(LocalDateTime.now());
+        note1.setCreatedAt(OffsetDateTime.now());
         note1.setNoteStatus(NoteStatus.ACTIVE);
 
         Note note2 = new Note();
         note2.setTitle("Notatka 2");
         note2.setContent("Treść notatki drugiej.");
         note2.setUser(marcin);
-        note2.setCreatedAt(LocalDateTime.now());
+        note2.setCreatedAt(OffsetDateTime.now());
         note2.setNoteStatus(NoteStatus.ACTIVE);
 
         Note note3 = new Note();
         note3.setTitle("Notatka 3");
         note3.setContent("Treść notatki 3.");
         note3.setUser(marcin);
-        note3.setCreatedAt(LocalDateTime.now());
+        note3.setCreatedAt(OffsetDateTime.now());
         note3.setNoteStatus(NoteStatus.ACTIVE);
 
         Note note4 = new Note();
         note4.setTitle("Notatka 4 - test nowej linii");
         note4.setContent("Treść notatki wygląda dokładnie tak jak tutaj.\nNowy wiersz.");
         note4.setUser(maciej);
-        note4.setCreatedAt(LocalDateTime.now());
+        note4.setCreatedAt(OffsetDateTime.now());
         note4.setNoteStatus(NoteStatus.ACTIVE);
 
         Note note5 = new Note();
         note5.setTitle("Notatka 5 - test markdowna");
         note5.setContent("## Treść innej notatki  \n- test\n- działania składki\n- języka markdown");
         note5.setUser(maciej);
-        note5.setCreatedAt(LocalDateTime.now());
+        note5.setCreatedAt(OffsetDateTime.now());
         note5.setNoteStatus(NoteStatus.ACTIVE);
 
         Note note6 = new Note();
         note6.setTitle("Notatka 6");
         note6.setContent("Zobaczymy jak wygląda kod:\n\n\t\twcięcie");
         note6.setUser(maciej);
-        note6.setCreatedAt(LocalDateTime.now());
+        note6.setCreatedAt(OffsetDateTime.now());
         note6.setNoteStatus(NoteStatus.ACTIVE);
 
         Note note7 = new Note();
         note7.setTitle("Notatka 7");
         note7.setContent("Albo czy działa tabela:\n\n| 1 | 2 |\n|:---:|:---:|\n| pierwsza kolumna | drugia kolumna |\n\n_pogrubienie_ i *pogrubienie*");
         note7.setUser(maciej);
-        note7.setCreatedAt(LocalDateTime.now());
+        note7.setCreatedAt(OffsetDateTime.now());
         note7.setNoteStatus(NoteStatus.ACTIVE);
 
         Note note8 = new Note();
         note8.setTitle("Notatka 8");
         note8.setContent("Kod wygląda tak:\n```\n\tpublic static void main(String[] argv) {\n\t\tNote note = new Note();\n\t}\n```");
         note8.setUser(maciej);
-        note8.setCreatedAt(LocalDateTime.now());
+        note8.setCreatedAt(OffsetDateTime.now());
         note8.setNoteStatus(NoteStatus.ACTIVE);
 
         Note note9 = new Note();
         note9.setTitle("Notatka 9 - zarchiwizowana.");
         note9.setContent("## Treść usuniętej notatki.\n*pogrubiony tekst*");
         note9.setUser(maciej);
-        note9.setCreatedAt(LocalDateTime.now());
+        note9.setCreatedAt(OffsetDateTime.now());
         note9.setNoteStatus(NoteStatus.ARCHIVED);
 
         Note note10 = new Note();
         note10.setTitle("Notatka 10 - usunięta");
         note10.setContent("[ta notatka jest usunięta](https://google.pl)");
         note10.setUser(maciej);
-        note10.setCreatedAt(LocalDateTime.now());
+        note10.setCreatedAt(OffsetDateTime.now());
         note10.setNoteStatus(NoteStatus.DELETED);
 
         noteRepository.save(note1);
