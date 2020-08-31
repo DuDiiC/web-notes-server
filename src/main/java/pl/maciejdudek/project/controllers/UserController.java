@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import pl.maciejdudek.project.configuration.security.SecurityPermissionChecker;
 import pl.maciejdudek.project.exceptions.UnauthorizedException;
 import pl.maciejdudek.project.model.DTO.UserDTO;
-import pl.maciejdudek.project.services.UserServiceImpl;
+import pl.maciejdudek.project.services.UserService;
 
 import java.security.Principal;
 import java.util.List;
@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class UserController {
 
-    private final UserServiceImpl userService;
+    private final UserService userService;
     private final ModelMapper modelMapper;
     private final SecurityPermissionChecker securityPermissionChecker;
 

@@ -10,7 +10,7 @@ import pl.maciejdudek.project.exceptions.UnauthorizedException;
 import pl.maciejdudek.project.model.DTO.NoteDTO;
 import pl.maciejdudek.project.model.Note;
 import pl.maciejdudek.project.model.NoteStatus;
-import pl.maciejdudek.project.services.NoteServiceImpl;
+import pl.maciejdudek.project.services.NoteService;
 
 import java.security.Principal;
 import java.util.List;
@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class NoteController {
 
-    private final NoteServiceImpl noteService;
+    private final NoteService noteService;
     private final ModelMapper modelMapper;
     private final SecurityPermissionChecker securityPermissionChecker;
 
