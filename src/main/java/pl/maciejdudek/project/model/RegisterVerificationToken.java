@@ -1,6 +1,8 @@
 package pl.maciejdudek.project.model;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -8,7 +10,8 @@ import java.util.Calendar;
 import java.util.Date;
 
 @Entity
-@Data
+@Getter @Setter
+@NoArgsConstructor
 public class RegisterVerificationToken {
 
     private static final int EXPIRATION = 60 * 24;
