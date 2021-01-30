@@ -8,7 +8,9 @@ import pl.maciejdudek.project.model.DTO.UserDTO;
 import pl.maciejdudek.project.model.Note;
 import pl.maciejdudek.project.model.User;
 
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Configuration
 public class ModelMapperConfig {
@@ -17,11 +19,11 @@ public class ModelMapperConfig {
     public ModelMapper modelMapper() {
         ModelMapper modelMapper = new ModelMapper();
 
-        Converter<Set<Note>, long[]> noteSetToLongArrayConverter =
+        Converter<Set<Note>, List<Long>> noteSetToLongArrayConverter =
                 ctx -> ctx.getSource()
                         .stream()
-                        .mapToLong(Note::getId)
-                        .toArray();
+                        .map(Note::getId)
+                        .collect(Collectors.toList());
 
         modelMapper.createTypeMap(User.class, UserDTO.class)
                 .addMappings(map -> map
