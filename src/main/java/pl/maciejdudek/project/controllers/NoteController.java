@@ -32,7 +32,7 @@ public class NoteController {
     public List<NoteDTO> getAll(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size,
                                 @RequestParam(defaultValue = "ASC") Sort.Direction sort, @RequestParam(defaultValue = "id") String by,
                                 @AuthenticationPrincipal Principal principal) {
-        if(securityPermissionChecker.userIsAdmin(principal.getName())) {
+        if (securityPermissionChecker.userIsAdmin(principal.getName())) {
             return noteService.getAll(page, size, sort, by).stream()
                     .map(note -> modelMapper.map(note, NoteDTO.class))
                     .collect(Collectors.toList());
@@ -44,7 +44,7 @@ public class NoteController {
     @GetMapping("/notes/{id}")
     public NoteDTO getOne(@PathVariable Long id, @AuthenticationPrincipal Principal principal) {
         String requestUsername = principal.getName();
-        if(securityPermissionChecker.userIsAdmin(requestUsername) || securityPermissionChecker.userIsOwnerOfNote(requestUsername, id)) {
+        if (securityPermissionChecker.userIsNoteOwner(requestUsername, id) || securityPermissionChecker.userIsAdmin(requestUsername)) {
             return modelMapper.map(
                     noteService.getOne(id),
                     NoteDTO.class);
@@ -59,8 +59,8 @@ public class NoteController {
                                       @RequestParam(defaultValue = "ASC") Sort.Direction sort, @RequestParam(defaultValue = "id") String by,
                                       @AuthenticationPrincipal Principal principal) {
         String requestUsername = principal.getName();
-        if(securityPermissionChecker.userIsAdmin(requestUsername) || securityPermissionChecker.usernameCorrespondsId(requestUsername, id)) {
-            if(noteStatus == null) {
+        if (securityPermissionChecker.usernameCorrespondsId(requestUsername, id) || securityPermissionChecker.userIsAdmin(requestUsername)) {
+            if (noteStatus == null) {
                 return noteService.getAllByUser(id, page, size, sort, by).stream()
                         .map(note -> modelMapper.map(note, NoteDTO.class))
                         .collect(Collectors.toList());
@@ -84,7 +84,7 @@ public class NoteController {
     @PutMapping("/notes/{id}")
     public NoteDTO update(@PathVariable Long id, @RequestBody NoteDTO noteDTO,
                           @AuthenticationPrincipal Principal principal) {
-        if(securityPermissionChecker.userIsOwnerOfNote(principal.getName(), id)) {
+        if (securityPermissionChecker.userIsNoteOwner(principal.getName(), id)) {
             return modelMapper.map(
                     noteService.update(id, modelMapper.map(noteDTO, Note.class)),
                     NoteDTO.class);
@@ -96,7 +96,7 @@ public class NoteController {
     @PutMapping("/notes/{id}/status")
     public NoteDTO updateStatus(@PathVariable Long id, @RequestBody Map<String, NoteStatus> statusJson,
                                 @AuthenticationPrincipal Principal principal) {
-        if(securityPermissionChecker.userIsOwnerOfNote(principal.getName(), id)) {
+        if (securityPermissionChecker.userIsNoteOwner(principal.getName(), id)) {
             return modelMapper.map(
                     noteService.updateStatus(id, statusJson.get("noteStatus")),
                     NoteDTO.class
@@ -109,7 +109,7 @@ public class NoteController {
     @DeleteMapping("/notes/{id}")
     public void delete(@PathVariable Long id, @AuthenticationPrincipal Principal principal) {
         String requestUsername = principal.getName();
-        if(securityPermissionChecker.userIsAdmin(requestUsername) || securityPermissionChecker.userIsOwnerOfNote(requestUsername, id)) {
+        if (securityPermissionChecker.userIsNoteOwner(requestUsername, id) || securityPermissionChecker.userIsAdmin(requestUsername)) {
             noteService.delete(id);
         } else {
             throw new UnauthorizedException();

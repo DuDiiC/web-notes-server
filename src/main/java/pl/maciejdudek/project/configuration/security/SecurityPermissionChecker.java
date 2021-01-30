@@ -25,7 +25,7 @@ public class SecurityPermissionChecker {
         ).getUsername().equals(username);
     }
 
-    public boolean userIsOwnerOfNote(String username, long noteId) {
+    public boolean userIsNoteOwner(String username, long noteId) {
         return userRepository.findByUsername(username).orElseThrow(
                 () -> new ObjectNotFoundException(username, "User")
         ).getId().equals(noteRepository.findById(noteId).orElseThrow(

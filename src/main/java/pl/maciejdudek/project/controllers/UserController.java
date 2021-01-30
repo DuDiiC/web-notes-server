@@ -29,7 +29,7 @@ public class UserController {
     public List<UserDTO> getAll(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size,
                                 @RequestParam(defaultValue = "ASC") Sort.Direction sort, @RequestParam(defaultValue = "id") String by,
                                 @AuthenticationPrincipal Principal principal) {
-        if(securityPermissionChecker.userIsAdmin(principal.getName())) {
+        if (securityPermissionChecker.userIsAdmin(principal.getName())) {
             return userService.getAll(page, size, sort, by).stream()
                     .map(user -> modelMapper.map(user, UserDTO.class))
                     .collect(Collectors.toList());
@@ -42,7 +42,7 @@ public class UserController {
     public UserDTO getOne(@PathVariable Long id,
                           @AuthenticationPrincipal Principal principal) {
         String requestUsername = principal.getName();
-        if(securityPermissionChecker.userIsAdmin(requestUsername) || securityPermissionChecker.usernameCorrespondsId(requestUsername, id)) {
+        if (securityPermissionChecker.usernameCorrespondsId(requestUsername, id) || securityPermissionChecker.userIsAdmin(requestUsername)) {
             return modelMapper.map(userService.getOne(id), UserDTO.class);
         }
         throw new UnauthorizedException();
@@ -53,7 +53,7 @@ public class UserController {
     public UserDTO getOneByName(@RequestParam("username") String username,
                                 @AuthenticationPrincipal Principal principal) {
         String requestUsername = principal.getName();
-        if(securityPermissionChecker.userIsAdmin(requestUsername) || requestUsername.equals(username)) {
+        if (requestUsername.equals(username) || securityPermissionChecker.userIsAdmin(requestUsername)) {
             return modelMapper.map(userService.getOneByName(username), UserDTO.class);
         }
         throw new UnauthorizedException();
