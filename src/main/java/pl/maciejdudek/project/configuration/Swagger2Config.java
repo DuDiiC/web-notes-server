@@ -16,6 +16,10 @@ import java.util.List;
 @EnableSwagger2
 public class Swagger2Config {
 
+    public static final String NOTES_TAG = "notes";
+    public static final String USERS_TAG = "users";
+    public static final String LOGIN_AND_REGISTER_TAG = "login and registration";
+
     /** Turning off error basic controller in swagger2. */
     @Bean
     public Docket swaggerApi() {
@@ -24,6 +28,11 @@ public class Swagger2Config {
                 .paths(PathSelectors.regex("^(?!/(error).*$).*$"))
                 .build()
                 .apiInfo(apiInfo())
+                .tags(
+                        new Tag(NOTES_TAG, "endpoints for notes"),
+                        new Tag(USERS_TAG, "endpoints for users"),
+                        new Tag(LOGIN_AND_REGISTER_TAG, "enpoints for login and registration")
+                )
                 .securitySchemes(Collections.singletonList(createScheme()))
                 .securityContexts(Collections.singletonList(createContext()));
     }

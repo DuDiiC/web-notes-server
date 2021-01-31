@@ -1,14 +1,19 @@
 package pl.maciejdudek.project.controllers;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import pl.maciejdudek.project.configuration.Swagger2Config;
 import pl.maciejdudek.project.configuration.security.SecurityPermissionChecker;
 import pl.maciejdudek.project.exceptions.UnauthorizedException;
 import pl.maciejdudek.project.model.DTO.UserDTO;
 import pl.maciejdudek.project.services.UserService;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.security.Principal;
 import java.util.List;
@@ -18,6 +23,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping(("/api"))
 @RequiredArgsConstructor
+@Api(tags = {Swagger2Config.USERS_TAG})
 public class UserController {
 
     private final UserService userService;
