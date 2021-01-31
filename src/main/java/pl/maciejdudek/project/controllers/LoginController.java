@@ -15,6 +15,7 @@ import pl.maciejdudek.project.model.DTO.LoginDTO;
 public class LoginController {
 
     @PostMapping("/login")
+    @ApiOperation(value = "log in to the service by receiving JWT")
     public void login(@RequestBody LoginDTO credentials) {
     }
 }

@@ -32,9 +32,10 @@ public class UserController {
 
     // only for admin
     @GetMapping("/users")
+    @ApiOperation(value = "get all users with paging")
     public List<UserDTO> getAll(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size,
                                 @RequestParam(defaultValue = "ASC") Sort.Direction sort, @RequestParam(defaultValue = "id") String by,
-                                @AuthenticationPrincipal Principal principal) {
+                                @ApiIgnore @AuthenticationPrincipal Principal principal) {
         if (securityPermissionChecker.userIsAdmin(principal.getName())) {
             return userService.getAll(page, size, sort, by).stream()
                     .map(user -> modelMapper.map(user, UserDTO.class))
@@ -45,8 +46,10 @@ public class UserController {
 
     // only for admin and user where userId equals id from request
     @GetMapping("/users/{id}")
+    @ApiOperation(value = "get selected user by ID")
+    @ApiImplicitParam(name = "id", value = "user ID", required = true, dataTypeClass = Long.class, paramType = "path")
     public UserDTO getOne(@PathVariable Long id,
-                          @AuthenticationPrincipal Principal principal) {
+                          @ApiIgnore @AuthenticationPrincipal Principal principal) {
         String requestUsername = principal.getName();
         if (securityPermissionChecker.usernameCorrespondsId(requestUsername, id) || securityPermissionChecker.userIsAdmin(requestUsername)) {
             return modelMapper.map(userService.getOne(id), UserDTO.class);
@@ -56,8 +59,10 @@ public class UserController {
 
     // only for admin and user where username equals id from request
     @GetMapping("/users/name")
+    @ApiOperation(value = "get user by selected username")
+    @ApiImplicitParam(name = "username", value = "name of the searched user")
     public UserDTO getOneByName(@RequestParam("username") String username,
-                                @AuthenticationPrincipal Principal principal) {
+                                @ApiIgnore @AuthenticationPrincipal Principal principal) {
         String requestUsername = principal.getName();
         if (requestUsername.equals(username) || securityPermissionChecker.userIsAdmin(requestUsername)) {
             return modelMapper.map(userService.getOneByName(username), UserDTO.class);
