@@ -19,6 +19,7 @@ public class Swagger2Config {
     public static final String NOTES_TAG = "notes";
     public static final String USERS_TAG = "users";
     public static final String LOGIN_AND_REGISTER_TAG = "login and registration";
+    public static final String TEST_TAG = "test endpoints";
 
     /** Turning off error basic controller in swagger2. */
     @Bean
@@ -31,7 +32,8 @@ public class Swagger2Config {
                 .tags(
                         new Tag(NOTES_TAG, "endpoints for notes"),
                         new Tag(USERS_TAG, "endpoints for users"),
-                        new Tag(LOGIN_AND_REGISTER_TAG, "enpoints for login and registration")
+                        new Tag(LOGIN_AND_REGISTER_TAG, "endpoints for login and registration"),
+                        new Tag(TEST_TAG, "endpoints for permission testing")
                 )
                 .securitySchemes(Collections.singletonList(createScheme()))
                 .securityContexts(Collections.singletonList(createContext()));

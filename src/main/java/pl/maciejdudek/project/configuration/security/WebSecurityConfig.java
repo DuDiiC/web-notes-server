@@ -61,6 +61,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/login").permitAll()
                 // API
                 .antMatchers("/api/**").hasAnyRole("USER", "ADMIN")
+                // for tests
+                .antMatchers("/test/unsecured").permitAll()
+                .antMatchers("/test/securedForUserTest").hasAnyRole("USER, ADMIN")
+                .antMatchers("/test/securedForAdminTest").hasRole("ADMIN")
 //                .antMatchers("/api/**").permitAll()
                 // stateless session
                 .and()
