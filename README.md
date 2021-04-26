@@ -1,6 +1,6 @@
 ### A sample application showing the use of the Spring platform in practice. I mainly use Spring Boot, Spring Security, Spring Framework, Spring Data.
 
-Server testing with swagger available [here](https://web-notes-example.herokuapp.com/swagger-ui.html) (as admin: username `Kamil`, password `Kamil123`, as user: `Marcin`, `Marcin123`).
+Server testing with swagger available [here](https://web-notes-server.herokuapp.com/swagger-ui.html) (as admin: username `Kamil`, password `Kamil123`, as user: `Marcin`, `Marcin123`).
 
 Application for managing user notes. Implemented functionalities:
 
